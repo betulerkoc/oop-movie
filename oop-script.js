@@ -1,4 +1,5 @@
 //the API documentation site https://developers.themoviedb.org/3/
+// api key 542003918769df50083a13c415bbc602
 
 class App {
     static async run() {
@@ -23,6 +24,11 @@ class APIService {
     }
     static _constructUrl(path) {
         return `${this.TMDB_BASE_URL}/${path}?api_key=${atob('NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI=')}`;
+    }
+
+    // TODO
+    static async fetchActors() {
+
     }
 }
 
@@ -72,16 +78,29 @@ class MovieSection {
         </div>
         <div class="col-md-8">
           <h2 id="movie-title">${movie.title}</h2>
-          <p id="genres">${movie.genres}</p>
+          <p id="genres">${movie.genres}</p> // TODO genres is an array, we need to loop through it
           <p id="movie-release-date">${movie.releaseDate}</p>
           <p id="movie-runtime">${movie.runtime}</p>
           <h3>Overview:</h3>
           <p id="movie-overview">${movie.overview}</p>
         </div>
       </div>
-      <h3>Actors:</h3>
+      <h3>Actors:</h3> // TODO
     `;
     }
+}
+
+// TODO
+class Actors {
+
+}
+
+class ActorPage {
+
+}
+
+class ActorSection {
+
 }
 
 class Movie {
