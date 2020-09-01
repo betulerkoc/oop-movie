@@ -9,3 +9,9 @@
 #actors {
     margin: 24px 16px 0 0;
 }
+
+.genres {
+    margin: 0 4px;
+    padding: 6px;
+    background-color: rgb(226, 179, 179);
+}

@@ -41,7 +41,7 @@ class HomePage {
             movieImage.src = `${movie.backdropUrl}`;
             const movieTitle = document.createElement("h3");
             movieTitle.textContent = `${movie.title}`;
-            movieImage.addEventListener("click", function() {
+            movieImage.addEventListener("click", function () {
                 Movies.run(movie);
             });
 
@@ -70,6 +70,12 @@ class MoviePage {
 }
 
 class MovieSection {
+    static renderGenres = (genres) => {
+        return genres.reduce(((genresSpans, genre) => (
+            `<span class="genres genres-${genre.name.toLowerCase()}">${genre.name}</span>` + genresSpans)
+        ), '')
+    }
+
     static renderMovie(movie) {
         MoviePage.container.innerHTML = `
       <div class="row">
@@ -78,7 +84,7 @@ class MovieSection {
         </div>
         <div class="col-md-8">
           <h2 id="movie-title">${movie.title}</h2>
-          <p id="genres">${movie.genres}</p> // TODO genres is an array, we need to loop through it
+          <p id="genres">${MovieSection.renderGenres(movie.genres)}</p> // TODO genres is an array, we need to loop through it
           <p id="movie-release-date">${movie.releaseDate}</p>
           <p id="movie-runtime">${movie.runtime}</p>
           <h3>Overview:</h3>
@@ -112,6 +118,7 @@ class Movie {
         this.runtime = json.runtime + " minutes";
         this.overview = json.overview;
         this.backdropPath = json.backdrop_path;
+        this.genres = json.genres;
     }
 
     get backdropUrl() {
