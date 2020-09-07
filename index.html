@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/asPieProgress.css">
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://kit.fontawesome.com/1c23e53a94.js" crossorigin="anonymous"></script>
     <title>Movie</title>
@@ -32,10 +33,10 @@
                             Movies
                         </a>
                         <div class="dropdown-menu" id="dropdown" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" data-movies-category='now_playing'>Popular</a>
-                            <a class="dropdown-item" data-movies-category='popular'>Now Playing</a>
-                            <a class="dropdown-item" data-movies-category='top_rated'>Upcoming</a>
-                            <a class="dropdown-item" data-movies-category='upcoming'>Top rated</a>
+                            <a class="dropdown-item" data-movies-category='popular'>Popular</a>
+                            <a class="dropdown-item" data-movies-category='now_playing'>Now Playing</a>
+                            <a class="dropdown-item" data-movies-category='upcoming'>Upcoming</a>
+                            <a class="dropdown-item" data-movies-category='top_rated'>Top rated</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown" id="genres-btn">
@@ -88,11 +89,6 @@
     </nav>
 
     <div id="container" class="container">
-        <div class="row" id="movies">
-
-        </div>
-    </div>
-    <div id="actorSection" class="actorSection">
     </div>
 
 
@@ -126,11 +122,11 @@
             </div>
         </div>
     </section>
+
+
     <!-- ./Footer -->
 
-    <script src="./js/oop-script.js"></script>
     <!-- <script type="text/javascript" src="script.js"></script> -->
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -140,7 +136,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <script src='./js/jquery-asPieProgress.js'></script>
     <script src="./js/bootstrap-dropdownhover.js"></script>
+    <script src="./js/oop-script.js"></script>
 </body>
 
 </html>
