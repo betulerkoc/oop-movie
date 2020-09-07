@@ -18,13 +18,7 @@ class App {
             })
         })
 
-        // TODO
-        document.querySelectorAll("[data-movies-category]").forEach(elem => {
-            elem.addEventListener('click', function (e) {
-                let element = e.target.dataset.moviesCategory ? e.target : e.target.parentNode;
-                Genres.run(element.dataset.moviesCategory)
-            })
-        })
+        Events.bindMovieCategoryListener();
 
         document.getElementById("searchMovie").addEventListener("click", function (event) {
             event.preventDefault();
@@ -75,6 +69,13 @@ class APIService {
         const response = await fetch(url)
         const data = await response.json()
         return data;
+    }
+
+    static async fetchKeyword(keywordId) {
+        const url = APIService._constructUrl(`keyword/${keywordId}/movies`)
+        const response = await fetch(url)
+        const data = await response.json()
+        return data.results;
     }
 
     static async fetchRecommendations(movieId) {
@@ -148,6 +149,9 @@ class HomePage {
                     <div class="card">        
                         <img src="${movie.backdropUrl}" class="card-img-top" alt="${movie.title}" data-movie-id="${movie.id}">
                         <div class="card-body">
+                            <div class="pie_progress" role="progressbar" data-goal="${movie.voteAverage * 10}">
+                                <div class="pie_progress__number">0%</div>
+                            </div>
                             <h5 class="card-title" data-movie-id="${movie.id}">${movie.title}</h5>
                             <p class="card-text mute-text">${movie.releaseDate}</p>
                         </div>
@@ -158,6 +162,7 @@ class HomePage {
         })
         this.container.appendChild(moviesDiv)
         Events.bindMovieListener();
+        updateVoteAverage()
     }
 
     static renderSearchedMovies(movies) {
@@ -244,10 +249,10 @@ class HomePage {
 class Search {
     static run(searchedValues) {
         this.forPeople(searchedValues)
-        this.forMovies(searchedValues)    
+        this.forMovies(searchedValues)
     }
-    
-    static forMoviesWithSelectedGenres(datas) {
+
+    static renderMoviesSearchResult(datas) {
         HomePage.container.innerHTML = "";
 
         datas.forEach(data => {
@@ -296,7 +301,7 @@ class Search {
 
     static async forGenre(genreId) {
         const datas = await APIService.fetchMoviesWithSelectedGenres(genreId)
-        this.forMoviesWithSelectedGenres(datas);
+        this.renderMoviesSearchResult(datas);
     }
 
 }
@@ -310,7 +315,7 @@ class Genres {
 
     static async run(genreId) {
         const datas = await APIService.fetchMoviesWithSelectedGenres(genreId)
-        Search.forMoviesWithSelectedGenres(datas);
+        Search.renderMoviesSearchResult(datas);
     }
 }
 
@@ -381,6 +386,7 @@ class MoviePage {
     static renderKeywords(keywords) {
         if (keywords.length > 0) {
             MovieSection.renderMovieKeywords(keywords);
+            Events.bindMovieKeywordListener();
         }
     }
 }
@@ -569,14 +575,7 @@ class PersonPage {
     static renderFullListMovies(moviesData) {
         PersonSection.renderFullListMovies(moviesData);
 
-        const movieElements = document.querySelectorAll("[data-movie-id]");
-        movieElements.forEach(elem => {
-            elem.addEventListener('click', function (e) {
-                let element = e.target.dataset.movieId ? e.target : e.target.parentNode;
-                Movies.run(element.dataset.movieId);
-            })
-        })
-
+        Events.bindMovieListener();
     }
 }
 
@@ -733,6 +732,46 @@ class Events {
             })
         })
     }
+
+    static bindMovieCategoryListener() {
+        document.querySelectorAll("[data-movies-category]").forEach(elem => {
+            elem.addEventListener('click', async function (e) {
+                let element = e.target.dataset.moviesCategory ? e.target : e.target.parentNode;
+
+                const movies = await APIService.fetchMovies(element.dataset.moviesCategory)
+                HomePage.renderMovies(movies);
+                if (element.dataset.moviesCategory !== 'popular') {
+                    const div = document.createElement('div');
+                    div.className = "row"
+                    div.innerHTML = `
+                        <div class="col-12 movie-category"><h3>${e.target.textContent}</h3></div>    
+                    `
+                    HomePage.container.prepend(div)
+                }
+            })
+        })
+    }
+
+    static bindMovieKeywordListener() {
+        document.querySelectorAll("[data-keyword-id]").forEach(elem => {
+            elem.addEventListener('click', async function (e) {
+                let element = e.target.dataset.keywordId ? e.target : e.target.parentNode;
+
+                const movies = await APIService.fetchKeyword(element.dataset.keywordId)
+                console.log(movies);
+                Search.renderMoviesSearchResult(movies);
+                const div = document.createElement('div');
+                div.className = "row"
+                div.innerHTML = `
+                        <div class="col-12 movie-category"><h3>Category: ${e.target.textContent}</h3></div>    
+                    `
+                HomePage.container.prepend(div)
+
+            })
+        })
+
+    }
+
 }
 
 class Movie {
@@ -777,4 +816,27 @@ class Person {
     }
 }
 
+$('.pie_progress').asPieProgress('start');
 document.addEventListener("DOMContentLoaded", App.run);
+
+// $(document).ready(function(){
+//     $('.circle').circleProgress({
+//         startAngle: -Math.PI / 2,
+//         fill: "#0575e6"
+//     }).on('circle-animation-progress', function(event, progress, stepValue) {
+//         $(this).find('span').html(Math.round(stepValue * 100) + '%');
+//     });
+
+//     $(function () {
+//         $("#commentForm").validate();
+//     });
+
+// });
+
+function updateVoteAverage() {
+    $('.pie_progress').asPieProgress({
+        namespace: 'pie_progress'
+    });
+    $('.pie_progress').asPieProgress('start');
+}
+
