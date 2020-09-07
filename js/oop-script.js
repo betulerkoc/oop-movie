@@ -164,10 +164,13 @@ class HomePage {
         this.container.innerHTML = "";
         movies.forEach(movie => {
             const movieDiv = document.createElement("div");
-            movieDiv.className = "row";
+            movieDiv.className = "card";
+
+            const movieRow = document.createElement("div");
+            movieRow.className = "row justify-content-md-center align-items-center ";
 
             const movieImgDiv = document.createElement("div");
-            movieImgDiv.className = "col-lg-4";
+            movieImgDiv.className = "col-lg-3";
             movieImgDiv.setAttribute('data-movie-id', movie.id)
 
             const movieImage = document.createElement("img");
@@ -175,7 +178,7 @@ class HomePage {
             movieImage.className = "card-img-top";
 
             const movieInfoDiv = document.createElement("div");
-            movieInfoDiv.className = "col-lg-8";
+            movieInfoDiv.className = "col-lg-9";
 
             const movieTitle = document.createElement("h3");
             movieTitle.textContent = `${movie.title}`;
@@ -197,8 +200,10 @@ class HomePage {
             movieInfoDiv.appendChild(movieTitle);
             movieInfoDiv.appendChild(movieOverview);
 
-            movieDiv.appendChild(movieImgDiv);
-            movieDiv.appendChild(movieInfoDiv);
+            movieRow.appendChild(movieImgDiv);
+            movieRow.appendChild(movieInfoDiv);
+
+            movieDiv.appendChild(movieRow);
             this.container.appendChild(movieDiv);
         })
 
@@ -319,11 +324,11 @@ class Movies {
         const movieData = await APIService.fetchMovie(movieID)
         MoviePage.renderMovieSection(movieData);
 
-        const movieVideos = await APIService.fetchVideos(movieID)
-        MoviePage.renderMovieVideos(movieVideos);
-
         const movieCredits = await APIService.fetchCredits(movieID);
         MoviePage.renderMovieCast(movieCredits.cast);
+
+        const movieVideos = await APIService.fetchVideos(movieID)
+        MoviePage.renderMovieVideos(movieVideos);
 
         const movieSimilar = await APIService.fetchSimilar(movieID);
         if (movieSimilar.results && movieSimilar.results.length > 0) {
@@ -342,6 +347,7 @@ class Movies {
 
 class MoviePage {
     static container = document.getElementById('container');
+    
     static renderMovieSection(movie) {
         MovieSection.renderMovieDetail(movie);
 
@@ -394,32 +400,38 @@ class MovieSection {
 
     static renderMovieDetail(movie) {
         MoviePage.container.innerHTML = `
-      <div id="movie-detail" class="row">
-        <div class="col-md-4">
-          <img id="movie-backdrop" src=${movie.backdropUrl}> 
-        </div>
-        <div class="col-md-8">
-          <h2 id="movie-title">${movie.title}</h2>
-          <p id="genres">${MovieSection.renderGenres(movie.genres)}</p>
-          <p id="movie-release-date">${movie.releaseDate}</p>
-          <p id="movie-runtime">${movie.runtime}</p>
-          <p id="movie-rating">${movie.voteAverage}/10</p>
-          <p id="movie-lang">${movie.voteCount}</p>
-          <p id="movie-lang">${movie.tagline}</p>
-        </div>
-    </div>
-    <div id="movie-description" class="row">
-        <div class="col-12">
+        <section>
+        <div id="movie-detail" class="row movie-information-card">
+            <div class="col-md-4">
+            <img id="movie-backdrop" src=${movie.backdropUrl}> 
+            </div>
+            <div class="col-md-8 movie-content">
+            <h2 id="movie-title">${movie.title}</h2>
+            <p id="genres">${MovieSection.renderGenres(movie.genres)}</p>
+            <p id="movie-release-date">${movie.releaseDate}</p>
+            
+            <p id="movie-lang">${movie.tagline}</p>
             <p id="movie-overview">${movie.overview}</p>
+            <div class="row">
+                <div class="col-md-3 mt-5">
+                    <p id="movie-runtime">${movie.runtime}</p>
+                </div>
+                <div class="col-md-3 mt-5">
+                    <p id="movie-rating">${movie.voteAverage}/10</p>
+                </div>
+                <div class="col-md-3 mt-5">
+                    <p id="movie-lang">${movie.voteCount}</p>
+                </div>
+            </div>
+            </div>
         </div>
-    </div>
+        </section>
     `;
     }
 
     static renderMovieVideos(videos) {
         const div = document.createElement('div');
         div.id = "movie-videos";
-        div.className = "row";
 
         const trailer = videos.find(video => video.type.toLowerCase() === "trailer");
         if (!trailer) {
@@ -450,6 +462,7 @@ class MovieSection {
     // cast
     static renderMovieCast(cast) {
         const div = document.createElement('div');
+
         const characterTemplate = (character) => (`
             <li class=card>
                 ${!character.profile_path ?
@@ -488,11 +501,14 @@ class MovieSection {
         div.id = "movie-similar";
 
         const template = (movie) => (`
-            <div class="col-4">
-                <img id="movie-backdrop" src=${movie.backdropUrl}> 
-                <h3>${movie.title}</h3>
-                <p>${movie.voteAverage}</p>
-                <p>${movie.overview}</p>
+            <div class="col-3">
+            <div class="card">
+                <img id="movie-backdrop" src=${movie.backdropUrl}>
+                <div class="card-body"> 
+                    <h3>${movie.title}</h3>
+                    <p>${movie.voteAverage}</p>
+                </div>
+            </div>
             </div>
         `);
 
@@ -513,7 +529,6 @@ class MovieSection {
     static renderMovieKeywords(keywords) {
         const div = document.createElement('div');
         div.id = "movie-keywords";
-        div.className = "row";
 
         const template = (keyword) => (`
             <li class="keyword" data-keyword-id="${keyword.id}"><a href="#">${keyword.name}</a></li>
@@ -521,7 +536,7 @@ class MovieSection {
 
         div.innerHTML = `
                 <h3>keywords</h3>
-                <ul class="col-12">
+                <ul class="col-3">
                     ${keywords.reduce((content, keyword) => content + template(keyword), '')}
                 </ul>
             `
@@ -580,18 +595,29 @@ class PersonPage {
     }
 }
 
+`      <div class="container">
+        <div class="row ">
+        <div class="col col-lg-3">
+            1 of 3
+        </div>
+        <div class="col col-lg-9">
+            Variable width content
+        </div>
+        </div>
+       </div>`
+
 class PersonSection {
     static renderPersonDetail(person) {
         const div = document.createElement('div');
         div.classList = 'person-info';
 
         div.innerHTML = `
-            <div id="left_wrapper">
-                <section id="original_header" class="images">
+        <div class="container">
+          <div class="row">
+            <div id="left_wrapper" class="col col-lg-4">
                 <div class="poster_wrapper profile">
                     <img class="profile" src="${person.backdropUrl}" alt="${person.name}">          
                 </div>
-                </section>
                 <div class="column">
                     <section class="full_wrapper">
                         <h3><bdi>Personal Info</bdi></h3>
@@ -612,7 +638,7 @@ class PersonSection {
                     </section>
                 </div>
             </div>
-            <div id='right-wrapper'>
+            <div id='right-wrapper' class="col col-lg-8">
                 <section class="full-wrapper">
                     <h2 class="title">${person.name}</h2>
                 </section>
@@ -621,6 +647,8 @@ class PersonSection {
                     <div class="content"><p>${person.biography ? person.biography.replaceAll('\n\n', '</p><p>') : "We don't have a biography for Greg Kriek."}</p></div>
                 </section>
             </div>
+            </div>
+         </div>
         `
 
         PersonPage.container.appendChild(div);
@@ -630,25 +658,27 @@ class PersonSection {
         const section = document.createElement('section');
         section.classList = 'full-wrapper';
         const template = movie => (`
+    
             <li class="card">
                 <div class="image">
-                ${!movie.backdrop_path ?
+                ${!movie.poster_path ?
                 `<a class="primary-photo no_image_holder" href="#" data-movie-id="${movie.id}"></a>` :
-                `<a class="primary-photo" href="#" data-movie-id="${movie.id}"><img alt="" title="" src="${Person.BACKDROP_BASE_URL + movie.backdrop_path}"></a>`}
+                `<a class="primary-photo" href="#" data-movie-id="${movie.id}"><img alt="" title="" src="${Person.BACKDROP_BASE_URL + movie.poster_path}"></a>`}
                 </div>
                 <p data-movie-id='${movie.id}'}><a href="#" data-movie-id="${movie.id}">${movie.title}</p>
             </li>
         `);
 
         section.innerHTML = `
-            <div id='known-for'>
-                <h3>Known for</h3>
-                <div>
-                    <ul>
-                        ${movies.reduce((total, movie) => total + template(movie), '')}
-                    </ul>
-                </div>
+            
+        <div class="col-12">
+        <h2>Known for</h2>
+            <div class="cast-list">
+                <ol class="people scroller">
+                ${movies.reduce((total, movie) => total + template(movie), '')}
+                </ol>
             </div>
+        </div>
         `
 
         document.getElementById('right-wrapper').appendChild(section);
@@ -685,7 +715,7 @@ class PersonSection {
         section.innerHTML = `
             <div class="credits_list">
                 <h3>Acting</h3>
-                <table>
+                <table class="table">
                     <tbody>
                         <tr>
                             <td>
