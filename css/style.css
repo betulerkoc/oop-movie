@@ -1,0 +1,209 @@
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+/* https://colorhunt.co/palette/201830 */
+html {
+    --imageBorderRadius: 8px;
+    --lightGrey: 227,227,227;
+
+}
+#movie-backdrop {
+    width: 100%;
+}
+
+/* nav bar */
+nav.navbar {
+    background-color: #2d4059;
+}
+.navbar-brand i {
+    font-size: 1.6em;
+}
+
+#actors {
+    margin: 24px 16px 0 0;
+}
+
+.genres {
+    margin: 0 4px;
+    padding: 6px;
+    background-color: rgb(226, 179, 179);
+}
+
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin: 20px 0;
+    border: 1px solid rgba(var(--lightGrey), 1);
+    padding-bottom: 10px;
+    border-radius: var(--imageBorderRadius);
+    min-height: calc(208px * 1.5);
+}
+
+.card h5 {
+    font-weight: 700;
+    color: #000;
+    font-size: 1em;
+    margin-bottom: 0.2em;
+}
+
+.card p {
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+    color: rgba(0,0,0,0.6);}
+
+.card img:hover, .card h5 {
+    cursor: pointer;
+}
+
+/* Movie Cards */
+
+
+/* Cast */
+.cast-list {
+    display: inline;
+}
+
+ol.people {
+    list-style-type: none;
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+ol.people li {
+    min-width: 140px;
+    width: 140px;
+    background-color: #fff;
+    margin-right: 10px;
+}
+
+ol.people.scroller {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    margin-left: -10px;
+    margin-top: -10px;
+}
+
+ol.people li.card {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 4px;
+    border: 1px solid rgba(var(--lightGrey), 1);
+    padding-bottom: 10px;
+    border-radius: var(--imageBorderRadius);
+    overflow: hidden;
+}
+ol.people li p {
+    padding: 0 10px;
+}
+
+ol.people li a + p {
+    padding-top: 10px;
+}
+
+ol.people li p.character {
+    font-size: 0.9em;
+}
+
+/* people image */
+.primary-photo img {
+    width: 150px;
+}
+.no_image_holder {
+    width: 150px;
+    height: 225px;
+    background-color: #dbdbdb;
+    background-image: url('https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+}
+
+#movie-backdrop {
+    width: 100%;
+}
+
+.movieCard{
+    padding: 0;
+    border-bottom: 1px solid black;
+
+    border-radius: 25px;
+    padding: 5px;
+}
+
+.movieCard h3{
+    text-align: center;
+}
+
+section {
+    padding: 60px 0;
+}
+
+section .section-title {
+    text-align: center;
+    color: #007b5e;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+#footer {
+    background: #343A40 !important;
+}
+#footer h5{
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+    color:#ffffff;
+}
+#footer a {
+    color: #ffffff;
+    text-decoration: none !important;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+#footer ul.social li{
+	padding: 3px 0;
+}
+#footer ul.social li a i {
+    margin-right: 5px;
+	font-size:25px;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.social li:hover a i {
+	font-size:30px;
+	margin-top:-10px;
+}
+#footer ul.social li a,
+#footer ul.quick-links li a{
+	color:#ffffff;
+}
+#footer ul.social li a:hover{
+	color:#eeeeee;
+}
+#footer ul.quick-links li{
+	padding: 3px 0;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.quick-links li:hover{
+	padding: 3px 0;
+	margin-left:5px;
+	font-weight:700;
+}
+#footer ul.quick-links li a i{
+	margin-right: 5px;
+}
+#footer ul.quick-links li:hover a i {
+    font-weight: 700;
+}
+
+
+ .dropdown .dropdown-menu {
+    margin-top: 0;
+ }
