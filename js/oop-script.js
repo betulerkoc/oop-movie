@@ -849,20 +849,6 @@ class Person {
 $('.pie_progress').asPieProgress('start');
 document.addEventListener("DOMContentLoaded", App.run);
 
-// $(document).ready(function(){
-//     $('.circle').circleProgress({
-//         startAngle: -Math.PI / 2,
-//         fill: "#0575e6"
-//     }).on('circle-animation-progress', function(event, progress, stepValue) {
-//         $(this).find('span').html(Math.round(stepValue * 100) + '%');
-//     });
-
-//     $(function () {
-//         $("#commentForm").validate();
-//     });
-
-// });
-
 function updateVoteAverage() {
     $('.pie_progress').asPieProgress({
         namespace: 'pie_progress'
